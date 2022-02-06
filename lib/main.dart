@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:material_floating_search_bar/material_floating_search_bar.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
+import 'main_map.dart';
+
 void main() {
   runApp(const MyApp());
 }
@@ -132,9 +134,7 @@ class _MyHomePageState extends State<MyHomePage> {
             );
           },
         ),
-        body: const Center(
-          child: Text("This is the Widget behind the sliding panel"),
-        ),
+        body: const MainMap(),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: _incrementCounter,
