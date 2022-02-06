@@ -2,45 +2,32 @@ import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
 import 'package:tflite/tflite.dart';
 
-void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  cameras = await availableCameras();
-  runApp(MyApp());
-}
-
 List<CameraDescription>? cameras;
 
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: ThemeData.dark(),
-      home: HomePage(),
-    );
-  }
-}
-
-class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+class CameraPage extends StatefulWidget {
+  const CameraPage({Key? key}) : super(key: key);
 
   @override
-  _HomePageState createState() => _HomePageState();
+  _CameraPageState createState() => _CameraPageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _CameraPageState extends State<CameraPage> {
   CameraController? cameraController;
   CameraImage? cameraImage;
   List? recognitionsList;
   Stopwatch stopwatch = Stopwatch()..start();
 
-  initCamera() {
+  initCamera() async {
+    WidgetsFlutterBinding.ensureInitialized();
+    cameras = await availableCameras();
+
     cameraController = CameraController(cameras![0], ResolutionPreset.medium);
     cameraController?.initialize().then((value) {
       setState(() {
         cameraController?.startImageStream((image) {
           cameraImage = image;
           if (stopwatch.elapsedMilliseconds > 500) {
-            runModel();
+            // runModel();
             stopwatch.reset();
           }
         });
@@ -130,7 +117,7 @@ class _HomePageState extends State<HomePage> {
         left: 0.0,
         width: size.width,
         height: size.height - 100,
-        child: Container(
+        child: SizedBox(
           height: size.height - 100,
           child: (!cameraController!.value.isInitialized)
               ? Container()
@@ -148,6 +135,9 @@ class _HomePageState extends State<HomePage> {
 
     return SafeArea(
       child: Scaffold(
+        appBar: AppBar(
+          title: const Text('Scan Places'),
+        ),
         backgroundColor: Colors.black,
         body: Container(
           margin: const EdgeInsets.only(top: 50),

@@ -105,7 +105,7 @@ class _MyHomePageState extends State<MyHomePage> {
           onPressed: () {
             Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => RatingsPanel())
+                MaterialPageRoute(builder: (context) => const RatingsPanel())
             );
           },
           icon: Image.asset("images/logo.png"),

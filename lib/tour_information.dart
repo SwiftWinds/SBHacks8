@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'camera_page.dart';
 import 'model/tour.dart';
 
 class TourInformation extends StatelessWidget {
@@ -42,7 +43,9 @@ class TourInformation extends StatelessWidget {
               child: const Text("Go"),
               backgroundColor: const Color(0xFFA28AD2),
               foregroundColor: const Color(0xFFFFFFFF),
-              onPressed: () => {},
+              onPressed: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) => const CameraPage()));
+              },
             )
         )
       ],

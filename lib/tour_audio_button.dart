@@ -26,6 +26,7 @@ class _TourAudioButtonState extends State<TourAudioButton> {
     await aPlayer.stop();
   }
 
+  @override
   Widget build(BuildContext context) {
     return IconButton(
       icon: Icon(isPlaying ? Icons.play_circle_fill : Icons.play_arrow),
