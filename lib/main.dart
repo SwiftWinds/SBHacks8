@@ -1,8 +1,5 @@
+import 'package:discovar/search_panel.dart';
 import 'package:flutter/material.dart';
-import 'package:material_floating_search_bar/material_floating_search_bar.dart';
-import 'package:sliding_up_panel/sliding_up_panel.dart';
-
-import 'main_map.dart';
 
 void main() {
   runApp(const MyApp());
@@ -76,8 +73,7 @@ class _MyHomePageState extends State<MyHomePage> {
     // The Flutter framework has been optimized to make rerunning build methods
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
-    final isPortrait =
-        MediaQuery.of(context).orientation == Orientation.portrait;
+
     return Scaffold(
       appBar: AppBar(
         // Here we take the value from the MyHomePage object that was created by
@@ -89,53 +85,7 @@ class _MyHomePageState extends State<MyHomePage> {
           icon: Image.asset("images/logo.png"),
         ),
       ),
-      body: SlidingUpPanel(
-        panel: FloatingSearchBar(
-          hint: 'Search...',
-          scrollPadding: const EdgeInsets.only(top: 16, bottom: 56),
-          transitionDuration: const Duration(milliseconds: 800),
-          transitionCurve: Curves.easeInOut,
-          physics: const BouncingScrollPhysics(),
-          axisAlignment: isPortrait ? 0.0 : -1.0,
-          openAxisAlignment: 0.0,
-          width: isPortrait ? 600 : 500,
-          debounceDelay: const Duration(milliseconds: 500),
-          onQueryChanged: (query) {
-            // Call your model, bloc, controller here.
-          },
-          // Specify a custom transition to be used for
-          // animating between opened and closed stated.
-          transition: CircularFloatingSearchBarTransition(),
-          actions: [
-            FloatingSearchBarAction(
-              showIfOpened: false,
-              child: CircularButton(
-                icon: const Icon(Icons.place),
-                onPressed: () {},
-              ),
-            ),
-            FloatingSearchBarAction.searchToClear(
-              showIfClosed: false,
-            ),
-          ],
-          builder: (context, transition) {
-            return ClipRRect(
-              borderRadius: BorderRadius.circular(8),
-              child: Material(
-                color: Colors.white,
-                elevation: 4.0,
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: Colors.accents.map((color) {
-                    return Container(height: 112, color: color);
-                  }).toList(),
-                ),
-              ),
-            );
-          },
-        ),
-        body: const MainMap(),
-      ),
+      body: const SearchPanel(),
       floatingActionButton: FloatingActionButton(
         onPressed: _incrementCounter,
         tooltip: 'Increment',
