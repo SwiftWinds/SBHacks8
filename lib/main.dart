@@ -26,18 +26,21 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  CameraController ?cameraController;
-  CameraImage ?cameraImage;
-  List ?recognitionsList;
+  CameraController? cameraController;
+  CameraImage? cameraImage;
+  List? recognitionsList;
+  Stopwatch stopwatch = Stopwatch()..start();
 
   initCamera() {
     cameraController = CameraController(cameras![0], ResolutionPreset.medium);
     cameraController?.initialize().then((value) {
       setState(() {
-        cameraController?.startImageStream((image) =>
-        {
-          cameraImage = image,
-          runModel(),
+        cameraController?.startImageStream((image) {
+          cameraImage = image;
+          if (stopwatch.elapsedMilliseconds > 500) {
+            runModel();
+            stopwatch.reset();
+          }
         });
       });
     });
@@ -104,11 +107,9 @@ class _HomePageState extends State<HomePage> {
             border: Border.all(color: Colors.pink, width: 2.0),
           ),
           child: Text(
-            "${result['detectedClass']} ${(result['confidenceInClass'] * 100)
-                .toStringAsFixed(0)}%",
+            "${result['detectedClass']} ${(result['confidenceInClass'] * 100).toStringAsFixed(0)}%",
             style: TextStyle(
-              background: Paint()
-                ..color = colorPick,
+              background: Paint()..color = colorPick,
               color: Colors.black,
               fontSize: 18.0,
             ),
@@ -120,9 +121,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery
-        .of(context)
-        .size;
+    Size size = MediaQuery.of(context).size;
     List<Widget> list = [];
 
     list.add(
@@ -136,9 +135,9 @@ class _HomePageState extends State<HomePage> {
           child: (!cameraController!.value.isInitialized)
               ? new Container()
               : AspectRatio(
-            aspectRatio: cameraController!.value.aspectRatio,
-            child: CameraPreview(cameraController!),
-          ),
+                  aspectRatio: cameraController!.value.aspectRatio,
+                  child: CameraPreview(cameraController!),
+                ),
         ),
       ),
     );
