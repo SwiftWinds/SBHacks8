@@ -2,6 +2,7 @@ import 'package:discovar/search_panel.dart';
 import 'package:flutter/material.dart';
 
 import 'package:discovar/SearchPage/tour_list.dart';
+import 'audio_player.dart';
 
 void main() {
   runApp(const MyApp());
@@ -82,10 +83,11 @@ class _MyHomePageState extends State<MyHomePage> {
         // the App.build method, and use it to set our appbar title.
         centerTitle: false,
         title: Text(widget.title),
-        leading: IconButton(
-          onPressed: () {},
-          icon: Image.asset("images/logo.png"),
-        ),
+        leading: TourAudio()
+        // IconButton(
+        //   onPressed: () {},
+        //   icon: Image.asset("images/logo.png"),
+        // ),
       ),
       body: const SearchPanel(),
     );
