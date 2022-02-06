@@ -1,11 +1,16 @@
+import 'package:discovar/model/tour_point.dart';
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
 import 'package:tflite/tflite.dart';
+import 'package:collection/collection.dart';
 
 List<CameraDescription>? cameras;
 
 class CameraPage extends StatefulWidget {
-  const CameraPage({Key? key}) : super(key: key);
+  const CameraPage(this.setCurrentTourPoint, this.tourPoints, {Key? key}) : super(key: key);
+
+  final dynamic setCurrentTourPoint;
+  final List<TourPoint> tourPoints;
 
   @override
   _CameraPageState createState() => _CameraPageState();
@@ -27,7 +32,7 @@ class _CameraPageState extends State<CameraPage> {
         cameraController?.startImageStream((image) {
           cameraImage = image;
           if (stopwatch.elapsedMilliseconds > 500) {
-            // runModel();
+            runModel();
             stopwatch.reset();
           }
         });
@@ -45,7 +50,7 @@ class _CameraPageState extends State<CameraPage> {
       imageMean: 127.5,
       imageStd: 127.5,
       numResultsPerClass: 1,
-      threshold: 0.4,
+      threshold: 0.8,
     );
 
     setState(() {
@@ -108,26 +113,40 @@ class _CameraPageState extends State<CameraPage> {
 
   @override
   Widget build(BuildContext context) {
+    var confidentRecognition = recognitionsList?.firstWhereOrNull((recognition) => recognition['confidenceInClass'] > 0.85);
+    if (confidentRecognition != null)
+    {
+      var tourPoint = widget.tourPoints.firstWhereOrNull((tourPoint) => tourPoint.mlClassID == confidentRecognition['detectedClass']);
+      if (tourPoint != null)
+      {
+        widget.setCurrentTourPoint();
+        Navigator.pop(context);
+      }
+    }
+
     Size size = MediaQuery.of(context).size;
     List<Widget> list = [];
 
-    list.add(
-      Positioned(
-        top: 0.0,
-        left: 0.0,
-        width: size.width,
-        height: size.height - 100,
-        child: SizedBox(
+    if (cameraController != null)
+    {
+      list.add(
+        Positioned(
+          top: 0.0,
+          left: 0.0,
+          width: size.width,
           height: size.height - 100,
-          child: (!cameraController!.value.isInitialized)
-              ? Container()
-              : AspectRatio(
-            aspectRatio: cameraController!.value.aspectRatio,
-            child: CameraPreview(cameraController!),
+          child: SizedBox(
+            height: size.height - 100,
+            child: (!cameraController!.value.isInitialized)
+                ? Container()
+                : AspectRatio(
+              aspectRatio: cameraController!.value.aspectRatio,
+              child: CameraPreview(cameraController!),
+            ),
           ),
         ),
-      ),
-    );
+      );
+    }
 
     if (cameraImage != null) {
       list.addAll(displayBoxesAroundRecognizedObjects(size));

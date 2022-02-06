@@ -28,8 +28,8 @@ class _MainDragPanelState extends State<MainDragPanel>
 
   var testTours = [
     Tour('UCSB', 'The best campus.', 4.5, LatLng(34.413963, -119.848946), const Image(image: AssetImage('images/Storke.JPG')), [
-      TourPoint("Storke Tower", LatLng(34.4125, -119.8495), "Storke Tower is a landmark campanile located on the campus of the University of California, Santa Barbara in the United States. Dedicated for use on September 28, 1969, the 61-bell carillon tower stands 175 ft tall. It was designed by the San Francisco architecture firm Clark and Morgan.", "storke_tower.mp3"),
-      TourPoint("Eternal Flame", LatLng(34.4150, -119.8455), "", "")
+      TourPoint("Storke Tower", LatLng(34.4125, -119.8495), "Storke Tower is a landmark campanile located on the campus of the University of California, Santa Barbara in the United States. Dedicated for use on September 28, 1969, the 61-bell carillon tower stands 175 ft tall. It was designed by the San Francisco architecture firm Clark and Morgan.", "storke_tower.mp3", "storke_tower"),
+      TourPoint("Eternal Flame", LatLng(34.4150, -119.8455), "", "", "peace_garden")
     ]),
     Tour('UCLA', 'WIP', 4.5, LatLng(34.066242, -118.445328), const Image(image: AssetImage('images/ucla.jpg')), [])
   ];
@@ -155,7 +155,7 @@ class _MainDragPanelState extends State<MainDragPanel>
     }
     else if (selectedTour != null && selectedTourPoint == null)
     {
-      widgetToDisplayInPanel = TourInformation(selectedTour: selectedTour!);
+      widgetToDisplayInPanel = TourInformation(onTourPointSelect, selectedTour: selectedTour!);
     }
     else if (selectedTour != null && selectedTourPoint != null)
     {

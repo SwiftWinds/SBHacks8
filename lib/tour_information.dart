@@ -4,9 +4,10 @@ import 'camera_page.dart';
 import 'model/tour.dart';
 
 class TourInformation extends StatelessWidget {
-  const TourInformation({Key? key, required this.selectedTour})
+  const TourInformation(this.onTourPointSelect, {Key? key, required this.selectedTour})
       : super(key: key);
   final Tour selectedTour;
+  final dynamic onTourPointSelect;
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +45,7 @@ class TourInformation extends StatelessWidget {
               backgroundColor: const Color(0xFFA28AD2),
               foregroundColor: const Color(0xFFFFFFFF),
               onPressed: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => const CameraPage()));
+                Navigator.push(context, MaterialPageRoute(builder: (context) => CameraPage(onTourPointSelect, selectedTour.points)));
               },
             )
         )

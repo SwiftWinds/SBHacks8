@@ -1,5 +1,5 @@
-eternal_flame
-grey_statue
-pond
-pyramid
+infinite_pool
+peace_garden
+the_ruins
 storke_tower
+eternal_flame
