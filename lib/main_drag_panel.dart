@@ -1,5 +1,6 @@
 import 'package:discovar/audio_information.dart';
 import 'package:discovar/model/tour_point.dart';
+import 'package:discovar/ratings_page.dart';
 import 'package:discovar/tour_information.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
@@ -42,6 +43,8 @@ class _MainDragPanelState extends State<MainDragPanel>
   final searchBarController = FloatingSearchBarController();
   final mapController = MapController();
 
+  String _value = 'discovar';
+
   LatLngBounds getCurrentPointBounds(double offsetMargin)
   {
     late List<LatLng> sortedTourPoints;
@@ -63,7 +66,7 @@ class _MainDragPanelState extends State<MainDragPanel>
   Widget build(BuildContext context) {
     final isPortrait = MediaQuery.of(context).orientation == Orientation.portrait;
     final maxPanelHeight = selectedTour == null
-        ? MediaQuery.of(context).size.height - (Scaffold.of(context).appBarMaxHeight?.round() ?? 0)
+        ? MediaQuery.of(context).size.height - (30)
         : 350.0;
 
     late double minPanelHeight;
@@ -80,14 +83,14 @@ class _MainDragPanelState extends State<MainDragPanel>
       minPanelHeight = 120.0;
     }
 
-    onTourSelect(Tour tour)
+    onTourSelect(Tour? tour, {double boundsMargin = 0.01})
     {
       setState(() {
         selectedTour = tour;
       });
 
       slidingPanelController.close();
-      mapController.fitBounds(getCurrentPointBounds(0.01));
+      mapController.fitBounds(getCurrentPointBounds(boundsMargin));
     }
 
     onTourPointSelect(TourPoint tourPoint)
@@ -159,19 +162,80 @@ class _MainDragPanelState extends State<MainDragPanel>
       widgetToDisplayInPanel = AudioInformation(tourPoint: selectedTourPoint!);
     }
 
-    return SlidingUpPanel(
-      backdropEnabled: true,
-      maxHeight: maxPanelHeight,
-      minHeight: minPanelHeight,
-      controller: slidingPanelController,
-      panel: widgetToDisplayInPanel,
-      body: MainMap(tourList, selectedTour, onTourSelect, onTourPointSelect, mapController, getCurrentPointBounds(2)),
-      onPanelClosed: () {
-        searchBarController.close();
-      },
-      onPanelOpened: () {
-        searchBarController.open();
-      },
+    return Scaffold(
+      appBar: AppBar(
+        // Here we take the value from the MyHomePage object that was created by
+        // the App.build method, and use it to set our appbar title.
+        centerTitle: false,
+        title: Theme(
+          child: DropdownButtonHideUnderline(
+            child: DropdownButton<String>(
+              value: _value,
+              items: const <DropdownMenuItem<String>>[
+                DropdownMenuItem(
+                  child: Text('discovAR'),
+                  value: 'discovar',
+                ),
+                DropdownMenuItem(
+                  child: Text('scavengAR'),
+                  value: 'scavengar',
+                ),
+              ],
+              onChanged: (String? value) {
+                if (value != null) {
+                  setState(() {
+                    _value = value;
+                  });
+                }
+              },
+            ),
+          ),
+          data: ThemeData.dark(),
+        ),
+        actions: <Widget>[
+          IconButton(
+            icon: const Icon(
+              Icons.add,
+              color: Colors.white,
+            ),
+            onPressed: () {
+              // do something
+            },
+          )
+        ],
+        leading: IconButton(
+          onPressed: () {
+            if (selectedTourPoint != null)
+            {
+              setState(() {
+                selectedTourPoint = null;
+              });
+            }
+            else if (selectedTour != null)
+            {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => RatingsPanel(selectedTour!, onTourSelect))
+              );
+            }
+          },
+          icon: Image.asset("images/logo.png"),
+        ),
+      ),
+      body: SlidingUpPanel(
+        backdropEnabled: true,
+        maxHeight: maxPanelHeight,
+        minHeight: minPanelHeight,
+        controller: slidingPanelController,
+        panel: widgetToDisplayInPanel,
+        body: MainMap(tourList, selectedTour, onTourSelect, onTourPointSelect, mapController, getCurrentPointBounds(2)),
+        onPanelClosed: () {
+          searchBarController.close();
+        },
+        onPanelOpened: () {
+          searchBarController.open();
+        },
+      ),
     );
   }
 }

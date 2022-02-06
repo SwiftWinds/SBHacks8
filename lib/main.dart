@@ -1,5 +1,4 @@
 import 'package:discovar/main_drag_panel.dart';
-import 'package:discovar/ratings_page.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -49,7 +48,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  String _value = 'discovar';
 
   @override
   Widget build(BuildContext context) {
@@ -60,58 +58,6 @@ class _HomePageState extends State<HomePage> {
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
 
-    return Scaffold(
-      appBar: AppBar(
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        centerTitle: false,
-        title: Theme(
-          child: DropdownButtonHideUnderline(
-            child: DropdownButton<String>(
-              value: _value,
-              items: const <DropdownMenuItem<String>>[
-                DropdownMenuItem(
-                  child: Text('discovAR'),
-                  value: 'discovar',
-                ),
-                DropdownMenuItem(
-                  child: Text('scavengAR'),
-                  value: 'scavengar',
-                ),
-              ],
-              onChanged: (String? value) {
-                if (value != null) {
-                  setState(() {
-                    _value = value;
-                  });
-                }
-              },
-            ),
-          ),
-          data: ThemeData.dark(),
-        ),
-        actions: <Widget>[
-          IconButton(
-            icon: const Icon(
-              Icons.add,
-              color: Colors.white,
-            ),
-            onPressed: () {
-              // do something
-            },
-          )
-        ],
-        leading: IconButton(
-          onPressed: () {
-            Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const RatingsPanel())
-            );
-          },
-          icon: Image.asset("images/logo.png"),
-        ),
-      ),
-      body: const MainDragPanel(),
-    );
+    return const MainDragPanel();
   }
 }

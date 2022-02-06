@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
 
+import 'model/tour.dart';
+
 class RatingsPanel extends StatefulWidget {
-  const RatingsPanel( {Key? key}) : super (key:key);
+  const RatingsPanel(this.currentTour, this.setCurrentTour, {Key? key}) : super (key:key);
+
+  final Tour? currentTour;
+  final dynamic setCurrentTour;
 
   @override
   State<RatingsPanel> createState() => _RatingsPanelState();
@@ -37,6 +42,18 @@ class _RatingsPanelState extends State<RatingsPanel> {
     return Scaffold(
         appBar: AppBar(
           title: const Text('Rating?'),
+          leading: IconButton(
+            icon: const Icon(
+              Icons.arrow_back,
+              color: Colors.white
+            ),
+            onPressed: () {
+              setState(() {
+                widget.setCurrentTour(null, boundsMargin: 2.0);
+              });
+              Navigator.pop(context);
+            }
+          ),
         ),
         body: Center(
           child: Column(
@@ -54,7 +71,7 @@ class _RatingsPanelState extends State<RatingsPanel> {
                   children: ratingStarIcons,
               ),
               Container(
-                child: const Image(image: AssetImage('images/Storke.JPG'),),
+                child: widget.currentTour!.coverImage,
                 height: MediaQuery.of(context).size.height/3*2,
                 padding: const EdgeInsets.fromLTRB(20, 60, 20, 50)
               )
