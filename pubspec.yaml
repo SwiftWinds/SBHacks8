@@ -37,7 +37,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   sliding_up_panel: ^2.0.0+1
   flutter_map: ^0.14.0
-  camera: ^0.9.4+10
+  camera: ^0.9.2+2
   tflite: ^1.1.2
 
 dev_dependencies:
