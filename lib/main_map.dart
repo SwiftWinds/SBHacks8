@@ -6,11 +6,12 @@ import 'model/tour.dart';
 
 class MainMap extends StatelessWidget
 {
-  const MainMap(this.tours, this.selectedTour, this.setSelectedTour, this.controller, this.defaultBounds, {Key? key}) : super(key: key);
+  const MainMap(this.tours, this.selectedTour, this.setSelectedTour, this.setSelectedTourPoint, this.controller, this.defaultBounds, {Key? key}) : super(key: key);
 
   final List<Tour> tours;
   final Tour? selectedTour;
   final dynamic setSelectedTour;
+  final dynamic setSelectedTourPoint;
   final MapController controller;
   final LatLngBounds defaultBounds;
 
@@ -34,7 +35,7 @@ class MainMap extends StatelessWidget
               setSelectedTour(tour);
             })).toList()
             : selectedTour!.points.map((tourPoint) => tourPoint.toMarker(() {
-
+              setSelectedTourPoint(tourPoint);
             })).toList()
         )
       ],

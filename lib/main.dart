@@ -3,11 +3,11 @@ import 'package:discovar/ratings_page.dart';
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const DiscovARApp());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+class DiscovARApp extends StatelessWidget {
+  const DiscovARApp({Key? key}) : super(key: key);
 
   // This widget is the root of your application.
   @override
@@ -29,13 +29,13 @@ class MyApp extends StatelessWidget {
           secondary: const Color(0xFFA26AD2),
         ),
       ),
-      home: const MyHomePage(title: 'discovAR'),
+      home: const HomePage(title: 'discovAR'),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key, required this.title}) : super(key: key);
+class HomePage extends StatefulWidget {
+  const HomePage({Key? key, required this.title}) : super(key: key);
 
   // This class is the configuration for the state. It holds the values (in this
   // case the title) provided by the parent (in this case the App widget) and
@@ -45,10 +45,10 @@ class MyHomePage extends StatefulWidget {
   final String title;
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  State<HomePage> createState() => _HomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _HomePageState extends State<HomePage> {
   String _value = 'discovar';
 
   @override

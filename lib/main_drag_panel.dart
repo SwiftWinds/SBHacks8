@@ -28,7 +28,7 @@ class _MainDragPanelState extends State<MainDragPanel>
   var testTours = [
     Tour('UCSB', 'The best campus.', 4.5, LatLng(34.413963, -119.848946), const Image(image: AssetImage('images/Storke.JPG')), [
       TourPoint("Storke Tower", LatLng(34.4125, -119.8495), "Storke Tower is a landmark campanile located on the campus of the University of California, Santa Barbara in the United States. Dedicated for use on September 28, 1969, the 61-bell carillon tower stands 175 ft tall. It was designed by the San Francisco architecture firm Clark and Morgan.", "storke_tower.mp3"),
-      TourPoint("Eternal Flame", LatLng(34.4150, -119.8455), "Storke Tower is a landmark campanile located on the campus of the University of California, Santa Barbara in the United States. Dedicated for use on September 28, 1969, the 61-bell carillon tower stands 175 ft tall. It was designed by the San Francisco architecture firm Clark and Morgan.", "storke_tower.mp3")
+      TourPoint("Eternal Flame", LatLng(34.4150, -119.8455), "", "")
     ]),
     Tour('UCLA', 'WIP', 4.5, LatLng(34.066242, -118.445328), const Image(image: AssetImage('images/ucla.jpg')), [])
   ];
@@ -88,6 +88,13 @@ class _MainDragPanelState extends State<MainDragPanel>
 
       slidingPanelController.close();
       mapController.fitBounds(getCurrentPointBounds(0.01));
+    }
+
+    onTourPointSelect(TourPoint tourPoint)
+    {
+      setState(() {
+        selectedTourPoint = tourPoint;
+      });
     }
 
     late Widget widgetToDisplayInPanel;
@@ -158,7 +165,7 @@ class _MainDragPanelState extends State<MainDragPanel>
       minHeight: minPanelHeight,
       controller: slidingPanelController,
       panel: widgetToDisplayInPanel,
-      body: MainMap(testTours, selectedTour, onTourSelect, mapController, getCurrentPointBounds(2)),
+      body: MainMap(tourList, selectedTour, onTourSelect, onTourPointSelect, mapController, getCurrentPointBounds(2)),
       onPanelClosed: () {
         searchBarController.close();
       },
