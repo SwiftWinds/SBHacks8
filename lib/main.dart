@@ -1,4 +1,5 @@
 import 'package:discovar/main_drag_panel.dart';
+import 'package:discovar/ratings_page.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -101,7 +102,12 @@ class _MyHomePageState extends State<MyHomePage> {
           )
         ],
         leading: IconButton(
-          onPressed: () {},
+          onPressed: () {
+            Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => RatingsPanel())
+            );
+          },
           icon: Image.asset("images/logo.png"),
         ),
       ),
