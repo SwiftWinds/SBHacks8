@@ -1,11 +1,9 @@
-import 'package:flutter/cupertino.dart';
+import 'package:discovar/model/named_point.dart';
 import 'package:latlong2/latlong.dart';
 
-class TourPoint
-{
-  const TourPoint(this.name, this.coords, this.image);
+class TourPoint extends NamedPoint {
+  const TourPoint(String name, LatLng coords, this.audioPath)
+      : super(name, coords);
 
-  final String name;
-  final LatLng coords;
-  final Image image;
+  final String audioPath;
 }
