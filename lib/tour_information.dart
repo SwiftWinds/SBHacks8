@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-import '../model/tour.dart';
+import 'model/tour.dart';
 
-class InformationBox extends StatelessWidget {
-  const InformationBox({Key? key, required this.selectedTour})
+class TourInformation extends StatelessWidget {
+  const TourInformation({Key? key, required this.selectedTour})
       : super(key: key);
   final Tour selectedTour;
 
@@ -18,22 +18,22 @@ class InformationBox extends StatelessWidget {
       ratingValues[selectedTour.rating.floor()] = 1;
     }
 
-    var row1 = Row(
+    var topRow = Row(
       mainAxisSize: MainAxisSize.min,
       children: [
         Flexible(
             flex: 1,
             fit: FlexFit.tight,
             child: Padding(
-              padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
-              child: Container(width: 100, height: 100, child: selectedTour.coverImage)
+              padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
+              child: SizedBox(width: 100, height: 100, child: selectedTour.coverImage)
             )
         ),
         Flexible(
           flex: 1,
           fit: FlexFit.tight,
           child: Text(selectedTour.name,
-              style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold)),
+              style: const TextStyle(fontSize: 30, fontWeight: FontWeight.bold)),
         ),
         Flexible(
             flex: 1,
@@ -43,7 +43,8 @@ class InformationBox extends StatelessWidget {
               backgroundColor: const Color(0xFFA28AD2),
               foregroundColor: const Color(0xFFFFFFFF),
               onPressed: () => {},
-            ))
+            )
+        )
       ],
     );
     final ratings = Container(
@@ -64,6 +65,13 @@ class InformationBox extends StatelessWidget {
             }),
           ],
         ));
-    return Column(children: [row1, ratings]);
+    return Column(children: [
+      SizedBox(
+        height: 120,
+        child: topRow,
+      ),
+      ratings,
+      Text(selectedTour.description)
+    ]);
   }
 }

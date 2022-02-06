@@ -1,8 +1,5 @@
-import 'package:discovar/search_panel.dart';
+import 'package:discovar/main_drag_panel.dart';
 import 'package:flutter/material.dart';
-
-import 'package:discovar/SearchPage/tour_list.dart';
-import 'audio_player.dart';
 
 void main() {
   runApp(const MyApp());
@@ -38,10 +35,6 @@ class MyApp extends StatelessWidget {
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({Key? key, required this.title}) : super(key: key);
-
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
 
   // This class is the configuration for the state. It holds the values (in this
   // case the title) provided by the parent (in this case the App widget) and
@@ -112,7 +105,7 @@ class _MyHomePageState extends State<MyHomePage> {
           icon: Image.asset("images/logo.png"),
         ),
       ),
-      body: const SearchPanel(),
+      body: const MainDragPanel(),
     );
   }
 }
