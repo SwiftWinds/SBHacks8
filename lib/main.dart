@@ -54,18 +54,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
-    });
-  }
+  String _value = 'discovar';
 
   @override
   Widget build(BuildContext context) {
@@ -81,7 +70,42 @@ class _MyHomePageState extends State<MyHomePage> {
         // Here we take the value from the MyHomePage object that was created by
         // the App.build method, and use it to set our appbar title.
         centerTitle: false,
-        title: Text(widget.title),
+        title: Theme(
+          child: DropdownButtonHideUnderline(
+            child: DropdownButton<String>(
+              value: _value,
+              items: const <DropdownMenuItem<String>>[
+                DropdownMenuItem(
+                  child: Text('discovAR'),
+                  value: 'discovar',
+                ),
+                DropdownMenuItem(
+                  child: Text('scavengAR'),
+                  value: 'scavengar',
+                ),
+              ],
+              onChanged: (String? value) {
+                if (value != null) {
+                  setState(() {
+                    _value = value;
+                  });
+                }
+              },
+            ),
+          ),
+          data: ThemeData.dark(),
+        ),
+        actions: <Widget>[
+          IconButton(
+            icon: const Icon(
+              Icons.add,
+              color: Colors.white,
+            ),
+            onPressed: () {
+              // do something
+            },
+          )
+        ],
         leading: IconButton(
           onPressed: () {},
           icon: Image.asset("images/logo.png"),
