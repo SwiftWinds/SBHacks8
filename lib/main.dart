@@ -1,6 +1,8 @@
 import 'package:discovar/search_panel.dart';
 import 'package:flutter/material.dart';
 
+import 'package:discovar/SearchPage/tour_list.dart';
+
 void main() {
   runApp(const MyApp());
 }

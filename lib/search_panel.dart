@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:material_floating_search_bar/material_floating_search_bar.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
+import 'package:latlong2/latlong.dart';
 
 import 'main_map.dart';
+import 'SearchPage/tour_list.dart';
+import 'model/tour.dart';
 
 class SearchPanel extends StatefulWidget
 {
@@ -14,6 +17,15 @@ class SearchPanel extends StatefulWidget
 
 class _SearchPanelState extends State<SearchPanel>
 {
+
+  var tourList = [
+    Tour('UCSB', 'The best campus.', 4.5, LatLng(34.413963, -119.848946), Image(image: AssetImage('images/Storke.JPG')), []),
+    Tour('UCSB', 'The best campus.', 4.5, LatLng(34.413963, -119.848946), Image(image: AssetImage('images/Storke.JPG')), []),
+    Tour('UCSB', 'The best campus.', 4.5, LatLng(34.413963, -119.848946), Image(image: AssetImage('images/Storke.JPG')), []),
+    Tour('UCSB', 'The best campus.', 4.5, LatLng(34.413963, -119.848946), Image(image: AssetImage('images/Storke.JPG')), [])
+
+  ];
+
   @override
   Widget build(BuildContext context) {
     final isPortrait = MediaQuery.of(context).orientation == Orientation.portrait;
@@ -58,9 +70,7 @@ class _SearchPanelState extends State<SearchPanel>
               elevation: 4.0,
               child: Column(
                 mainAxisSize: MainAxisSize.min,
-                children: Colors.accents.map((color) {
-                  return Container(height: 112, color: color);
-                }).toList(),
+                children: tourList.map((tour) => tour.toTile()).toList(),
               ),
             ),
           );

@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:latlong2/latlong.dart';
 
 import 'named_point.dart';
@@ -12,4 +13,17 @@ class Tour extends NamedPoint
   final String description;
   final double rating;
   final Image coverImage;
+
+  ListTile toTile() {
+    return ListTile(
+      title: Text(name,
+          style: const TextStyle(
+            fontWeight: FontWeight.w500,
+            fontSize: 20,
+          )),
+      subtitle: Text(description),
+      leading: coverImage
+    );
+  }
+
 }
