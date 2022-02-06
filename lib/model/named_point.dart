@@ -11,8 +11,8 @@ class NamedPoint {
   Marker toMarker(onPressed)
   {
     return Marker(
-      width: 80,
-      height: 80,
+      width: 120,
+      height: 120,
       point: coords,
       builder: (ctx) => IconButton(
         icon: Image.asset('images/redpin.png'),
