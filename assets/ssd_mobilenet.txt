@@ -1,5 +1,5 @@
-storke_tower
 eternal_flame
-pond
 grey_statue
+pond
 pyramid
+storke_tower

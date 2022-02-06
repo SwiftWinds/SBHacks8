@@ -66,9 +66,7 @@ class _HomePageState extends State<HomePage> {
 
   Future loadModel() async {
     Tflite.close();
-    await Tflite.loadModel(
-        model: "assets/ssd_mobilenet.tflite",
-        labels: "assets/ssd_mobilenet.txt");
+    await Tflite.loadModel(model: "assets/ssd_mobilenet.tflite");
   }
 
   @override
@@ -103,7 +101,7 @@ class _HomePageState extends State<HomePage> {
         height: result["rect"]["h"] * factorY,
         child: Container(
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.all(Radius.circular(10.0)),
+            borderRadius: const BorderRadius.all(Radius.circular(10.0)),
             border: Border.all(color: Colors.pink, width: 2.0),
           ),
           child: Text(
@@ -133,7 +131,7 @@ class _HomePageState extends State<HomePage> {
         child: Container(
           height: size.height - 100,
           child: (!cameraController!.value.isInitialized)
-              ? new Container()
+              ? Container()
               : AspectRatio(
                   aspectRatio: cameraController!.value.aspectRatio,
                   child: CameraPreview(cameraController!),
@@ -150,7 +148,7 @@ class _HomePageState extends State<HomePage> {
       child: Scaffold(
         backgroundColor: Colors.black,
         body: Container(
-          margin: EdgeInsets.only(top: 50),
+          margin: const EdgeInsets.only(top: 50),
           color: Colors.black,
           child: Stack(
             children: list,
