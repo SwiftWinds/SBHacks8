@@ -38,6 +38,7 @@ dependencies:
   sliding_up_panel: ^2.0.0+1
   flutter_map: ^0.14.0
   camera: ^0.9.4+10
+  tflite: ^1.1.2
 
 dev_dependencies:
   flutter_test:
@@ -64,6 +65,7 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - images/logo.png
+    - assets/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
