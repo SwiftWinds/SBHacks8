@@ -6,14 +6,19 @@ import 'model/tour.dart';
 
 class MainMap extends StatelessWidget
 {
-  const MainMap(this.selectedTour, {Key? key}) : super(key: key);
+  const MainMap(this.tours, this.selectedTour, this.setSelectedTour, this.controller, this.defaultBounds, {Key? key}) : super(key: key);
 
+  final List<Tour> tours;
   final Tour? selectedTour;
+  final dynamic setSelectedTour;
+  final MapController controller;
+  final LatLngBounds defaultBounds;
 
   @override
   Widget build(BuildContext context) {
     return FlutterMap(
-      options: MapOptions(center: LatLng(34.413963, -119.848946), zoom: 13),
+      mapController: controller,
+      options: MapOptions(center: LatLng(34.413963, -119.848946), zoom: 13, bounds: defaultBounds),
       layers: [
         TileLayerOptions(
             urlTemplate:
@@ -23,13 +28,15 @@ class MainMap extends StatelessWidget
               'pk.eyJ1Ijoiampjb29sZXkiLCJhIjoiY2t6YWk0Z2NpMGkydjJvczhjcGN5OXRpYSJ9.buIc71Mdg98-ZHTKDxBoiQ',
               'id': 'mapbox.mapbox-streets-v8'
             }),
-        MarkerLayerOptions(markers: [
-          Marker(
-              width: 80,
-              height: 80,
-              point: selectedTour != null ? selectedTour!.points.first.coords : LatLng(34.413963, -119.848946),
-              builder: (ctx) => const FlutterLogo())
-        ])
+        MarkerLayerOptions(markers:
+          selectedTour == null
+            ? tours.map((tour) => tour.toMarker(() {
+              setSelectedTour(tour);
+            })).toList()
+            : selectedTour!.points.map((tourPoint) => tourPoint.toMarker(() {
+
+            })).toList()
+        )
       ],
     );
   }
