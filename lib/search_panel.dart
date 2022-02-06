@@ -4,7 +4,6 @@ import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'package:latlong2/latlong.dart';
 
 import 'main_map.dart';
-import 'SearchPage/tour_list.dart';
 import 'model/tour.dart';
 
 class SearchPanel extends StatefulWidget
@@ -17,14 +16,19 @@ class SearchPanel extends StatefulWidget
 
 class _SearchPanelState extends State<SearchPanel>
 {
+  _SearchPanelState()
+  {
+    tourList = testTours.where((tour) => true).toList();
+  }
 
-  var tourList = [
-    Tour('UCSB', 'The best campus.', 4.5, LatLng(34.413963, -119.848946), Image(image: AssetImage('images/Storke.JPG')), []),
-    Tour('UCSB', 'The best campus.', 4.5, LatLng(34.413963, -119.848946), Image(image: AssetImage('images/Storke.JPG')), []),
-    Tour('UCSB', 'The best campus.', 4.5, LatLng(34.413963, -119.848946), Image(image: AssetImage('images/Storke.JPG')), []),
-    Tour('UCSB', 'The best campus.', 4.5, LatLng(34.413963, -119.848946), Image(image: AssetImage('images/Storke.JPG')), [])
-
+  var testTours = [
+    Tour('UCSB', 'The worst campus.', 4.5, LatLng(34.413963, -119.848946), const Image(image: AssetImage('images/Storke.JPG')), []),
+    Tour('UCSB', 'The best campus.', 4.5, LatLng(34.413963, -119.848946), const Image(image: AssetImage('images/Storke.JPG')), []),
+    Tour('UCSB', 'The best campus.', 4.5, LatLng(34.413963, -119.848946), const Image(image: AssetImage('images/Storke.JPG')), []),
+    Tour('UCSB', 'The best campus.', 4.5, LatLng(34.413963, -119.848946), const Image(image: AssetImage('images/Storke.JPG')), [])
   ];
+
+  late List<Tour> tourList;
 
   @override
   Widget build(BuildContext context) {
@@ -46,6 +50,9 @@ class _SearchPanelState extends State<SearchPanel>
         debounceDelay: const Duration(milliseconds: 500),
         onQueryChanged: (query) {
           // Call your model, bloc, controller here.
+          setState(() => {
+            tourList = testTours.where((tour) => tour.name.contains(query) || tour.description.contains(query)).toList()
+          });
         },
         // Specify a custom transition to be used for
         // animating between opened and closed stated.
