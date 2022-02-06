@@ -83,11 +83,10 @@ class _MyHomePageState extends State<MyHomePage> {
         // the App.build method, and use it to set our appbar title.
         centerTitle: false,
         title: Text(widget.title),
-        leading: TourAudio()
-        // IconButton(
-        //   onPressed: () {},
-        //   icon: Image.asset("images/logo.png"),
-        // ),
+        leading: IconButton(
+          onPressed: () {},
+          icon: Image.asset("images/logo.png"),
+        ),
       ),
       body: const SearchPanel(),
     );
