@@ -50,7 +50,7 @@ class _CameraPageState extends State<CameraPage> {
       imageMean: 127.5,
       imageStd: 127.5,
       numResultsPerClass: 1,
-      threshold: 0.8,
+      threshold: 0.5,
     );
 
     setState(() {
@@ -60,7 +60,7 @@ class _CameraPageState extends State<CameraPage> {
 
   Future loadModel() async {
     Tflite.close();
-    await Tflite.loadModel(model: "assets/ssd_mobilenet.tflite");
+    await Tflite.loadModel(model: "assets/ssd_mobilenet.tflite", labels: "assets/ssd_mobilenet.txt");
   }
 
   @override
