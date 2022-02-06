@@ -1,9 +1,11 @@
 import 'package:audioplayers/audioplayers.dart';
+// import 'package:audioplayers/audio_cache.dart';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_progressed_play_button/flutter_progressed_play_button.dart';
 
-// import 'recordings/storke_tower.m4a';
+// import 'assets/storke_tower.m4a';
 
 class TourAudio extends StatefulWidget {
   @override
@@ -13,16 +15,20 @@ class TourAudio extends StatefulWidget {
 }
 
 class _TourAudioState extends State<TourAudio> {
+
+  _TourAudioState(){
+    player = AudioCache(fixedPlayer: aPlayer);
+  }
   bool isPlaying = false;
-  AudioPlayer player = AudioPlayer();
+  AudioPlayer aPlayer = AudioPlayer();
+  late AudioCache player;
 
   playLocal() async {
-    int result = await player.play('recordings/storke_tower.mp3',
-        isLocal: true);
+    await player.play('storke_tower.mp3');
   }
 
   pause() async {
-    int result = await player.pause();
+    await aPlayer.stop();
   }
 
   Widget build(BuildContext context) {
