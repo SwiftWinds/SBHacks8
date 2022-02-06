@@ -14,7 +14,7 @@ class Tour extends NamedPoint
   final double rating;
   final Image coverImage;
 
-  ListTile toTile() {
+  ListTile toTile(Function(Tour) onTourSelect) {
     return ListTile(
       title: Text(name,
           style: const TextStyle(
@@ -34,15 +34,10 @@ class Tour extends NamedPoint
           ),
           const Icon(Icons.star)
         ],
-      )
-
-      // trailing: Text(rating.toString(),
-      //     style: const TextStyle(
-      //       fontWeight: FontWeight.w500,
-      //       fontSize: 20,
-      //     )
-      // ),
+      ),
+      onTap: () {
+        onTourSelect(this);
+      }
     );
   }
-
 }
