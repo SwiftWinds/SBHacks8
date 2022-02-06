@@ -25,8 +25,8 @@ class MyApp extends StatelessWidget {
         // Notice that the counter didn't reset back to zero; the application
         // is not restarted.
         colorScheme: ColorScheme.fromSwatch().copyWith(
-          primary: const Color(0xFFA28AD2),
-          secondary: const Color(0xFFA28AD2),
+          primary: const Color(0xFFA26AD2),
+          secondary: const Color(0xFFA26AD2),
         ),
       ),
       home: const MyHomePage(title: 'discovAR'),
