@@ -2,6 +2,7 @@ import 'package:discovar/audio_information.dart';
 import 'package:discovar/model/tour_point.dart';
 import 'package:discovar/tour_information.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_map/flutter_map.dart';
 import 'package:material_floating_search_bar/material_floating_search_bar.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'package:latlong2/latlong.dart';
@@ -26,9 +27,10 @@ class _MainDragPanelState extends State<MainDragPanel>
 
   var testTours = [
     Tour('UCSB', 'The best campus.', 4.5, LatLng(34.413963, -119.848946), const Image(image: AssetImage('images/Storke.JPG')), [
-      TourPoint("Storke Tower", LatLng(37.413963, -119.848946), "Storke Tower is a landmark campanile located on the campus of the University of California, Santa Barbara in the United States. Dedicated for use on September 28, 1969, the 61-bell carillon tower stands 175 ft tall. It was designed by the San Francisco architecture firm Clark and Morgan.", "storke_tower.mp3")
+      TourPoint("Storke Tower", LatLng(34.4125, -119.8495), "Storke Tower is a landmark campanile located on the campus of the University of California, Santa Barbara in the United States. Dedicated for use on September 28, 1969, the 61-bell carillon tower stands 175 ft tall. It was designed by the San Francisco architecture firm Clark and Morgan.", "storke_tower.mp3"),
+      TourPoint("Eternal Flame", LatLng(34.4150, -119.8455), "Storke Tower is a landmark campanile located on the campus of the University of California, Santa Barbara in the United States. Dedicated for use on September 28, 1969, the 61-bell carillon tower stands 175 ft tall. It was designed by the San Francisco architecture firm Clark and Morgan.", "storke_tower.mp3")
     ]),
-    Tour('New York City', 'WIP', 4.5, LatLng(34.413963, -119.848946), const Image(image: AssetImage('images/Storke.JPG')), [])
+    Tour('UCLA', 'WIP', 4.5, LatLng(34.066242, -118.445328), const Image(image: AssetImage('images/ucla.jpg')), [])
   ];
 
   late List<Tour> tourList;
@@ -38,6 +40,24 @@ class _MainDragPanelState extends State<MainDragPanel>
 
   final slidingPanelController = PanelController();
   final searchBarController = FloatingSearchBarController();
+  final mapController = MapController();
+
+  LatLngBounds getCurrentPointBounds(double offsetMargin)
+  {
+    late List<LatLng> sortedTourPoints;
+    if (selectedTour != null)
+    {
+      sortedTourPoints = selectedTour!.points.map((point) => point.coords).toList();
+    }
+    else
+    {
+      sortedTourPoints = testTours.map((tour) => tour.coords).toList();
+    }
+    sortedTourPoints.sort((point1, point2) => point1.latitude < point2.latitude ? -1 : 1);
+    var leftmostCoordinate = sortedTourPoints.first;
+    var rightmostCoordinate = sortedTourPoints.last;
+    return LatLngBounds(LatLng(leftmostCoordinate.latitude-offsetMargin, leftmostCoordinate.longitude), LatLng(rightmostCoordinate.latitude+offsetMargin, rightmostCoordinate.longitude));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -63,13 +83,12 @@ class _MainDragPanelState extends State<MainDragPanel>
     onTourSelect(Tour tour)
     {
       setState(() {
-        selectedTour = selectedTour == null ? tour : null;
-        slidingPanelController.close();
+        selectedTour = tour;
       });
-    }
 
-    selectedTour = testTours[0];
-    selectedTourPoint = testTours[0].points[0];
+      slidingPanelController.close();
+      mapController.fitBounds(getCurrentPointBounds(0.01));
+    }
 
     late Widget widgetToDisplayInPanel;
     if (selectedTour == null)
@@ -139,7 +158,7 @@ class _MainDragPanelState extends State<MainDragPanel>
       minHeight: minPanelHeight,
       controller: slidingPanelController,
       panel: widgetToDisplayInPanel,
-      body: MainMap(selectedTour),
+      body: MainMap(testTours, selectedTour, onTourSelect, mapController, getCurrentPointBounds(2)),
       onPanelClosed: () {
         searchBarController.close();
       },
